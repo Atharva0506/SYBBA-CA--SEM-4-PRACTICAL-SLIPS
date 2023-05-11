@@ -1,98 +1,70 @@
-// Slip 5 b) /*Create a C++ base class Shape. Derive three different
-// classes Circle, Sphere and Cylinder from shape class. Write a C++
-// program to calculate area of Circle, Sphere(4 π r2) and Cylinder(2πr (h
-// + r) ). (Use pure virtual function). */
+// Slip 5 B) Create a C++ class for student having following membersRollno,Name,No. of subjects,Marks of each subject (no. of subjects
+// varies for each student) Write a parameterized constructor which
+// initialises Rollno,Name & no. of Subjects & creates the array of marks
+// dynamically.Display the details of all students with percentage & class
+// obtained.
 
 #include <iostream>
 using namespace std;
-#include <conio.h>
-#include <stdlib.h>
-class shape
+class student
 {
+    int rollno;
+    char name[10];
+    int tot_sub;
+    char sub_name[10][30];
+    int marks[10];
+    int tot_marks;
+    float per;
+
 public:
-    virtual void area() = 0;
-};
-class circle : public shape
-{
-public:
-    int r;
-    void getc()
+    void getdata()
     {
-        cout << "\nenter the radius:";
-        cin >> r;
+        cout << "\n\n Enter the Roll no: ";
+        cin >> rollno;
+        cout << "\n\n Enter the name: ";
+        cin >> name;
+        cout << "\n\n How many subject: ";
+        cin >> tot_sub;
+        for (int i = 0; i < tot_sub; i++)
+        {
+            cout << "\n\n Enter the subject name; ";
+            cin >> sub_name[i];
+            cout << "\n\n Enter the marks: ";
+            cin >> marks[i];
+        }
     }
-    void area();
-};
-class Sphere : public shape
-{
+
 public:
-    int r1;
-    void getr()
+    void display()
     {
-        cout << "\n Enter the radius:";
-        cin >> r1;
+        tot_marks = 0;
+        cout << "\n Roll number:" << rollno;
+        cout << "\n Student name: " << name;
+        for (int i = 0; i < tot_sub; i++)
+        {
+            cout << "\n Subject name: " << sub_name[i];
+            cout << "\n Subject mark: " << marks[i];
+            tot_marks = tot_marks + marks[i];
+        }
+        per = tot_marks / tot_sub;
+        cout << "\n\n Total obtain marks: " << tot_marks;
+        cout << "\n\n Percentge: " << per;
+        if (per >= 70)
+            cout << "\n \n Grade=Dist";
+        else if (per >= 60)
+            cout << "\n \n Grade=A";
+        else if (per >= 50)
+            cout << "\n \n Grade=B";
+        else if (per >= 40)
+            cout << "\n \n Grade=Pass";
+        else
+            cout << "\n \n Grade=Fail";
     }
-    void area();
 };
-class Cylinder : public shape
-{
-public:
-    int r2, h;
-    void gett()
-    {
-        cout << "\n Enter the radius2 & height:";
-        cin >> r2 >> h;
-    }
-    void area();
-};
-void circle::area()
-{
-    cout << (3.14 * r * r);
-}
-void Sphere::area()
-{
-    cout << (4 * 3.14 * r1 * r1);
-}
-void Cylinder::area()
-{
-    int d = h + r2;
-    cout << d;
-    cout << (2 * 3.14 * r2 * d);
-}
 int main()
 {
-    int ch;
-    circle c;
-    Sphere S;
-    Cylinder t;
-    do
-    {
-        cout << "\n1.Area of circle";
-        cout << "\n2.Area of Sphere";
-        cout << "\n3.Area of cylinder";
-        cout << "\n4.Exit";
-        cout << "\nEnter your choice:\t";
-        cin >> ch;
-        switch (ch)
-        {
-        case 1:
-            c.getc();
-            cout << "Area of circle:";
-            c.area();
-            break;
-        case 2:
-            S.getr();
-            cout << "Area of Sphere:";
-            S.area();
-            break;
-        case 3:
-            t.gett();
-            cout << "Area of cylinder:";
-            t.area();
-            break;
-        case 4:
-            exit(0);
-        }
-    } while (ch != 4);
+    student s;
+    s.getdata();
+    s.display();
     return 0;
-};
+}
